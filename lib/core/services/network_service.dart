@@ -1,6 +1,5 @@
-// lib/features/auth/data/network_provider.dart
-
 import 'dart:io';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NetworkState {
