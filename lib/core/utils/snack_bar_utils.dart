@@ -72,7 +72,7 @@ void showCustomSnackbar(
             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
-        if (status != SnackBarStatus.success)
+        if (status != SnackBarStatus.success && type != SnackBarType.alert)
           TextButton(
             onPressed: onRetry,
             child: const Text(
@@ -88,9 +88,9 @@ void showCustomSnackbar(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
     ),
-    margin: status == SnackBarStatus.success
+    margin: type == SnackBarType.alert
         ? EdgeInsets.only(
-            top: MediaQuery.of(context).size.height - 150,
+            bottom: 40,
             left: 16,
             right: 16,
           )

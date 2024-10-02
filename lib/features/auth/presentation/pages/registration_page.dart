@@ -17,6 +17,7 @@ class RegistrationScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageController = ref.watch(pageControllerProvider);
+    final termsController = ref.watch(checkBoxProvider);
 
     final usernameController = useTextEditingController();
     final passwordController = useTextEditingController();
@@ -119,23 +120,37 @@ class RegistrationScreen extends HookConsumerWidget {
                   text: "Create Account",
                   fontSize: 18,
                   onPressed: () async {
-                    if (fullNameController.text.isEmpty || usernameController.text.isEmpty || confirmPasswordController.text.isEmpty) {
+                    if (fullNameController.text.isEmpty ||
+                        usernameController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        confirmPasswordController.text.isEmpty) {
                       showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'All fields are required.', position: SnackPosition.top);
                       return;
-                    }
-                    final userDetails = RegisterUserModel(
-                        fullName: fullNameController.text, password: confirmPasswordController.text, username: usernameController.text);
-                    try {
+                    } else if (confirmPasswordController.text != passwordController.text) {
+                      showCustomSnackbar(context,
+                          status: SnackBarStatus.failure, message: 'Password & Confirm password are not same.', position: SnackPosition.top);
+                      return;
+                    } else if (!termsController) {
+                      showCustomSnackbar(context,
+                          status: SnackBarStatus.failure, message: 'Accept the Terms& condition', position: SnackPosition.top);
+                      return;
+                    } else {
+                      final userDetails = RegisterUserModel(
+                          fullName: fullNameController.text, password: confirmPasswordController.text, username: usernameController.text);
                       AuthResponse res = await ref.read(authStateProvider.notifier).signUp(userDetails);
                       showCustomSnackbar(
                         context,
                         status: res.status ? SnackBarStatus.success : SnackBarStatus.failure,
                         message: res.message,
                       );
+                      fullNameController.clear();
+                      usernameController.clear();
+                      passwordController.clear();
+                      confirmPasswordController.clear();
                       if (res.status) {
                         pageController.animateToPage(0, duration: Duration(milliseconds: 800), curve: Curves.linearToEaseOut);
                       }
-                    } catch (e) {}
+                    }
                   },
                   borderRadius: 12,
                   width: screenWidth,
