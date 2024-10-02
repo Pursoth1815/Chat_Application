@@ -4,4 +4,5 @@ class ImagePath {
   static const String apple_icon = "assets/images/apple.png";
   static const String fb_icon = "assets/images/facebook.png";
   static const String google_icon = "assets/images/google.png";
+  static const String file_upload = "assets/images/file_upload.png";
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:neighborgood/core/constants/app_colors.dart';
+import 'package:neighborgood/core/constants/app_constants.dart';
 import 'package:neighborgood/core/constants/image_path.dart';
 import 'package:neighborgood/core/shared/widgets/custom_button.dart';
 import 'package:neighborgood/core/shared/widgets/custom_check_box.dart';
@@ -24,20 +25,18 @@ class RegistrationScreen extends HookConsumerWidget {
     final confirmPasswordController = useTextEditingController();
     final fullNameController = useTextEditingController();
 
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       body: Container(
-        margin: EdgeInsets.only(top: (AppBar().preferredSize.height) + 20),
+        margin: EdgeInsets.only(top: AppConstants.appBarHeight + 20),
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Image.asset(
                 ImagePath.appName,
-                width: screenWidth * 0.7,
+                width: AppConstants.screenWidth * 0.7,
                 height: 55,
                 fit: BoxFit.cover,
               ),
@@ -153,7 +152,7 @@ class RegistrationScreen extends HookConsumerWidget {
                     }
                   },
                   borderRadius: 12,
-                  width: screenWidth,
+                  width: AppConstants.screenWidth,
                 ),
               ),
               OtherSignInOptions(

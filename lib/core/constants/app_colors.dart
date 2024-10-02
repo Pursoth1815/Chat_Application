@@ -18,4 +18,6 @@ class AppColors {
   static const Color transparent = Colors.transparent;
 
   static const Color gray = Color(0xFFDDDDDD);
+
+  static const Color grayLite = Color(0xFFFAFAFA);
 }
