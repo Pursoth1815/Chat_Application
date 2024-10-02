@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:neighborgood/core/services/network_service.dart';
+import 'package:neighborgood/core/services/network_services/network_service.dart';
 import 'package:neighborgood/core/utils/snack_bar_utils.dart';
 
 class NetworkListener extends HookConsumerWidget {
@@ -25,9 +25,12 @@ class NetworkListener extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showNetworkSnackBar(
+        showCustomSnackbar(
           context,
-          isConnected: networkState.isConnected,
+          type: SnackBarType.network,
+          duration: networkState.isConnected ? const Duration(seconds: 3) : const Duration(days: 365),
+          status: networkState.isConnected ? SnackBarStatus.success : SnackBarStatus.failure,
+          message: networkState.isConnected ? 'Internet Connected' : 'OOPS! No Internet',
           onRetry: () => notifier.refreshConnection(),
         );
       });

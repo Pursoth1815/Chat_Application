@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:neighborgood/core/services/network_listiner.dart';
+import 'package:neighborgood/core/services/network_services/network_listiner.dart';
+import 'package:neighborgood/features/auth/presentation/pages/authentication_page.dart';
 import 'package:neighborgood/firebase_options.dart';
 
 void main() async {
@@ -25,11 +26,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: NetworkListener(
-          child: Center(
-            child: InkWell(onTap: () => print("taped"), child: Text('Hello World!')),
-          ),
-        ),
+        body: NetworkListener(child: AuthenticationScreen()),
       ),
     );
   }
