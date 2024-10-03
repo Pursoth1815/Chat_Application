@@ -9,4 +9,6 @@ class ImagePath {
   static const String chat_icon = "assets/images/chat.png";
   static const String not_found = "assets/images/not_found.jpg";
   static const String user_profile = "assets/images/user_profile.png";
+  static const String edit_user_icon = "assets/images/edit_user.png";
+  static const String edit_icon = "assets/images/edit.png";
 }

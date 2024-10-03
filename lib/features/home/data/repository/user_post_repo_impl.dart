@@ -13,7 +13,7 @@ class UserPostRepoImpl implements UserProfilePostRepo {
       );
 
   @override
-  Stream<QuerySnapshot<Object?>> fetchUserPost() {
-    return _userPostRef.snapshots();
+  Stream<QuerySnapshot<Object?>> fetchUserPost(String userId) {
+    return _userPostRef.where('user_id', isEqualTo: userId).snapshots();
   }
 }

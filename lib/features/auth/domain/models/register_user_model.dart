@@ -34,9 +34,9 @@ class RegisterUserModel {
 
   factory RegisterUserModel.fromMap(Map<String, dynamic> map) {
     return RegisterUserModel(
-      username: map['username'] ?? '',
       user_id: map['user_id'] ?? '',
-      fullName: map['full_name'] ?? '',
+      username: map['user_name'] ?? '',
+      fullName: map['Name'] ?? '',
       password: '',
     );
   }

@@ -58,31 +58,37 @@ class HomeScreen extends HookConsumerWidget {
                   BottomNavigationBarItem(
                     icon: Image.asset(
                       ImagePath.home_icon,
-                      height: 20,
+                      height: 24,
                       color: currentIndex == 0 ? AppColors.colorPrimary : AppColors.black,
                     ),
                     label: '',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.search),
+                    icon: Icon(
+                      Icons.search,
+                      size: 24,
+                    ),
                     label: '',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.add_circle_outline_rounded),
+                    icon: Icon(
+                      Icons.add_circle_outline_rounded,
+                      size: 24,
+                    ),
                     label: '',
                   ),
                   BottomNavigationBarItem(
                     icon: Image.asset(
                       color: currentIndex == 3 ? AppColors.colorPrimary : AppColors.black,
                       ImagePath.chat_icon,
-                      height: 20,
+                      height: 24,
                     ),
                     label: '',
                   ),
                   BottomNavigationBarItem(
                     icon: Container(
-                      width: 20,
-                      height: 20,
+                      width: 24,
+                      height: 24,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(color: AppColors.colorPrimary, width: currentIndex == 4 ? 2 : 0),

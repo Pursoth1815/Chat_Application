@@ -6,9 +6,9 @@ class UserProfilePostUsecase {
 
   UserProfilePostUsecase(this.repository);
 
-  Stream<QuerySnapshot> call() {
+  Stream<QuerySnapshot> call(String userId) {
     try {
-      return repository.fetchUserPost();
+      return repository.fetchUserPost(userId);
     } catch (e) {
       rethrow;
     }

@@ -20,4 +20,6 @@ class AppColors {
   static const Color gray = Color(0xFFDDDDDD);
 
   static const Color grayLite = Color(0xFFFAFAFA);
+
+  static const Color profileBtnColor = Color(0xFFF0F0F0);
 }
