@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:neighborgood/core/constants/app_colors.dart';
 import 'package:neighborgood/core/constants/app_constants.dart';
 import 'package:neighborgood/core/constants/image_path.dart';
 import 'package:neighborgood/core/shared/providers/user_state_provider.dart';
 import 'package:neighborgood/core/shared/widgets/custom_text.dart';
-import 'package:neighborgood/features/create_post/domain/models/create_post_model.dart';
+import 'package:neighborgood/features/home/presentation/providers/home_screen_provider.dart';
 import 'package:neighborgood/features/home/presentation/providers/profile_screen_provider.dart';
 import 'package:neighborgood/features/home/presentation/widgets/profile_count_widget.dart';
+import 'package:neighborgood/features/home/presentation/widgets/user_posts_feed.dart';
 import 'package:neighborgood/features/home/presentation/widgets/user_profile_btn.dart';
 
 class ProfileScreen extends HookConsumerWidget {
@@ -15,8 +17,12 @@ class ProfileScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profilePostList = ref.watch(ProfileProvider);
-
+    final pageController = ref.watch(homePageControllerProvider);
     final user = ref.watch(userStateNotifierProvider);
+
+    final selectedIndex = useState(0);
+
+    final filteredPosts = selectedIndex.value == 0 ? profilePostList : profilePostList.where((post) => post.saved == true).toList();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -70,28 +76,71 @@ class ProfileScreen extends HookConsumerWidget {
                     ),
                     Profile_Count(post_length: profilePostList.length),
                     Container(
-                      margin: EdgeInsets.only(top: 8),
+                      margin: EdgeInsets.symmetric(vertical: 8),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           UserProfileButton(text: 'Edit Profile', imageAssetPath: ImagePath.edit_user_icon),
-                          UserProfileButton(text: 'Create Postcard', imageAssetPath: ImagePath.edit_icon),
+                          UserProfileButton(
+                            text: 'Create Postcard',
+                            imageAssetPath: ImagePath.edit_icon,
+                            onTap: () {
+                              pageController.jumpToPage(2);
+                              ref.read(bottomNavigationIndexProvider.notifier).state = 2;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: AppConstants.screenWidth * 0.4,
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildToggleButton(
+                            icon: Icons.grid_view,
+                            isSelected: selectedIndex.value == 0,
+                            onPressed: () => selectedIndex.value = 0,
+                          ),
+                          _buildToggleButton(
+                            icon: Icons.bookmark_border_rounded,
+                            isSelected: selectedIndex.value == 1,
+                            onPressed: () => selectedIndex.value = 1,
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
-              )
-              /*  ListView.builder(
-                itemBuilder: (context, index) => ListTile(
-                  title: Text(profilePostList[index].title),
-                ),
-                itemCount: profilePostList.length,
-              ), */
+              ),
+              PostGrid(posts: filteredPosts)
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildToggleButton({
+    required IconData icon,
+    required bool isSelected,
+    required VoidCallback onPressed,
+  }) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: onPressed,
+          child: Icon(icon, color: isSelected ? AppColors.colorPrimary : AppColors.gray, size: 24),
+        ),
+        if (isSelected)
+          Container(
+            height: 1,
+            margin: EdgeInsets.only(top: 5),
+            width: 40,
+            color: AppColors.colorPrimary,
+          ),
+      ],
     );
   }
 }

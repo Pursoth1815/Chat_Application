@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:neighborgood/core/constants/app_colors.dart';
 import 'package:neighborgood/core/constants/app_constants.dart';
 import 'package:neighborgood/core/constants/image_path.dart';
+import 'package:neighborgood/core/shared/providers/user_state_provider.dart';
 import 'package:neighborgood/core/shared/widgets/custom_button.dart';
 import 'package:neighborgood/core/shared/widgets/custom_text.dart';
 import 'package:neighborgood/core/shared/widgets/custom_text_view.dart';
@@ -13,11 +14,15 @@ import 'package:neighborgood/core/utils/utils.dart';
 import 'package:neighborgood/features/auth/data/entities/auth_entity.dart';
 import 'package:neighborgood/features/create_post/domain/models/create_post_model.dart';
 import 'package:neighborgood/features/create_post/presentation/provider/create_post_provider.dart';
+import 'package:neighborgood/features/home/presentation/providers/home_screen_provider.dart';
 
 class CreatePostScreen extends HookConsumerWidget {
   const CreatePostScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userStateNotifierProvider);
+    final pageController = ref.watch(homePageControllerProvider);
+
     final titleController = useTextEditingController();
     final descriptionController = useTextEditingController();
 
@@ -29,13 +34,18 @@ class CreatePostScreen extends HookConsumerWidget {
           'Create post',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         ),
-        leading: Icon(Icons.arrow_back_rounded),
+        leading: InkWell(
+            onTap: () {
+              pageController.jumpToPage(0);
+              ref.read(bottomNavigationIndexProvider.notifier).state = 0;
+            },
+            child: Icon(Icons.arrow_back_rounded)),
         backgroundColor: AppColors.white,
       ),
       body: SingleChildScrollView(
         child: Container(
           width: AppConstants.screenWidth,
-          height: AppConstants.screenHeight - kToolbarHeight,
+          height: AppConstants.screenHeight - AppConstants.appBarHeight - 20,
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             children: [
@@ -58,7 +68,8 @@ class CreatePostScreen extends HookConsumerWidget {
                     );
                   } else {
                     return CustomPaint(
-                      painter: DashedPainter(color: AppColors.black.withOpacity(0.25), strokeWidth: 1, dashPattern: [5, 5], radius: Radius.circular(15)),
+                      painter:
+                          DashedPainter(color: AppColors.black.withOpacity(0.25), strokeWidth: 1, dashPattern: [5, 5], radius: Radius.circular(15)),
                       child: Container(
                         height: AppConstants.screenHeight * 0.5,
                         decoration: BoxDecoration(
@@ -154,7 +165,11 @@ class CreatePostScreen extends HookConsumerWidget {
                           showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'Image upload Failed', position: SnackPosition.top);
                           return;
                         } else {
-                          CreatePostModel post = CreatePostModel(title: titleController.text, description: descriptionController.text, post_image_path: uploadFileRes.message);
+                          CreatePostModel post = CreatePostModel(
+                              user_id: user!.user_id,
+                              title: titleController.text,
+                              description: descriptionController.text,
+                              post_image_path: uploadFileRes.message);
                           AuthResponse uploadPostRes = await ref.read(createPostStateProvider.notifier).uploadPost(post);
 
                           showCustomSnackbar(

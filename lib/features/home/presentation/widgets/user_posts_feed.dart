@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'package:neighborgood/features/home/presentation/providers/profile_screen_provider.dart';
+import 'package:neighborgood/core/constants/app_colors.dart';
+import 'package:neighborgood/features/create_post/domain/models/create_post_model.dart';
 
 class PostGrid extends HookConsumerWidget {
+  final List<CreatePostModel> posts;
+
+  PostGrid({required this.posts});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final posts = ref.watch(ProfileProvider);
-
     return GridView.builder(
+      shrinkWrap: true,
+      padding: EdgeInsets.symmetric(vertical: 20),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         childAspectRatio: 1,
@@ -29,7 +32,10 @@ class PostGrid extends HookConsumerWidget {
 
               return Center(
                   child: CircularProgressIndicator(
-                value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1) : null,
+                color: AppColors.gray,
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                    : null,
               ));
             },
             errorBuilder: (context, error, stackTrace) {
