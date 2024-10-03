@@ -12,8 +12,8 @@ import 'package:neighborgood/core/utils/dotted_border.dart';
 import 'package:neighborgood/core/utils/snack_bar_utils.dart';
 import 'package:neighborgood/core/utils/utils.dart';
 import 'package:neighborgood/features/auth/data/entities/auth_entity.dart';
-import 'package:neighborgood/features/create_post/domain/models/create_post_model.dart';
 import 'package:neighborgood/features/create_post/presentation/provider/create_post_provider.dart';
+import 'package:neighborgood/features/home/domain/models/post_feeds_model.dart';
 import 'package:neighborgood/features/home/presentation/providers/home_screen_provider.dart';
 
 class CreatePostScreen extends HookConsumerWidget {
@@ -165,7 +165,8 @@ class CreatePostScreen extends HookConsumerWidget {
                           showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'Image upload Failed', position: SnackPosition.top);
                           return;
                         } else {
-                          CreatePostModel post = CreatePostModel(
+                          PostFeedsModel post = PostFeedsModel(
+                              pid: 0,
                               user_id: user!.user_id,
                               title: titleController.text,
                               description: descriptionController.text,

@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:neighborgood/features/auth/data/entities/auth_entity.dart';
 import 'package:neighborgood/features/create_post/data/repository/create_post_repo_impl.dart';
-import 'package:neighborgood/features/create_post/domain/models/create_post_model.dart';
 import 'package:neighborgood/features/create_post/domain/usecases/create_post_usecase.dart';
 import 'package:neighborgood/features/create_post/domain/usecases/upload_file_usecase.dart';
+import 'package:neighborgood/features/home/domain/models/post_feeds_model.dart';
 
 class CreatePostProvider extends StateNotifier<void> {
   final CreatePostUseCase createPostUseCase;
@@ -14,7 +14,7 @@ class CreatePostProvider extends StateNotifier<void> {
 
   CreatePostProvider(this.createPostUseCase, this.uploadFileUseCase) : super(null);
 
-  Future<AuthResponse> uploadPost(CreatePostModel post) async {
+  Future<AuthResponse> uploadPost(PostFeedsModel post) async {
     try {
       return await createPostUseCase.call(post);
     } catch (e) {

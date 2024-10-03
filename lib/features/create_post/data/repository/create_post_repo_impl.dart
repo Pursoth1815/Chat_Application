@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:mime/mime.dart';
 import 'package:neighborgood/features/auth/data/entities/auth_entity.dart';
-import 'package:neighborgood/features/create_post/domain/models/create_post_model.dart';
 import 'package:neighborgood/features/create_post/domain/repository/create_post_repo.dart';
+import 'package:neighborgood/features/home/domain/models/post_feeds_model.dart';
 
 class CreatePostRepoImpl implements CreatePostRepository {
   final FirebaseFirestore firestore;
@@ -13,9 +13,17 @@ class CreatePostRepoImpl implements CreatePostRepository {
   CreatePostRepoImpl(this.firestore);
 
   @override
-  Future<AuthResponse> createPost(CreatePostModel model) async {
+  Future<AuthResponse> createPost(PostFeedsModel model) async {
     try {
-      await firestore.collection('neighborgood_feeds').add(model.toMap());
+      final getLastId = await firestore.collection('neighborgood_feeds').orderBy('pid').limitToLast(1).get();
+
+      final userDoc = getLastId.docs.first;
+      final lastInsertedID = userDoc.data();
+
+      int PID = int.parse(lastInsertedID['pid'].toString()) + 1;
+      PostFeedsModel finalList = model.copyWith(pid: PID);
+
+      await firestore.collection('neighborgood_feeds').add(finalList.toMap());
 
       return AuthResponse(
         status: true,

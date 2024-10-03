@@ -3,8 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:neighborgood/core/constants/app_colors.dart';
 import 'package:neighborgood/core/constants/image_path.dart';
 import 'package:neighborgood/core/shared/screens/dev_screen.dart';
-import 'package:neighborgood/features/auth/presentation/pages/login_page.dart';
 import 'package:neighborgood/features/create_post/presentation/pages/create_post_screen.dart';
+import 'package:neighborgood/features/home/presentation/pages/post_feed_screen.dart';
 import 'package:neighborgood/features/home/presentation/pages/profile_screen.dart';
 import 'package:neighborgood/features/home/presentation/providers/home_screen_provider.dart';
 
@@ -32,7 +32,7 @@ class HomeScreen extends HookConsumerWidget {
           },
           physics: NeverScrollableScrollPhysics(),
           children: [
-            LoginScreen(),
+            PostFeedScreen(),
             DevelopingScreen(),
             CreatePostScreen(),
             DevelopingScreen(),
@@ -59,7 +59,7 @@ class HomeScreen extends HookConsumerWidget {
                     icon: Image.asset(
                       ImagePath.home_icon,
                       height: 24,
-                      color: currentIndex == 0 ? AppColors.colorPrimary : AppColors.black,
+                      color: currentIndex == 0 ? AppColors.colorPrimary : AppColors.blackLite.withOpacity(0.8),
                     ),
                     label: '',
                   ),

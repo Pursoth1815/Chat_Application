@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:neighborgood/core/constants/app_colors.dart';
-import 'package:neighborgood/features/create_post/domain/models/create_post_model.dart';
+import 'package:neighborgood/features/home/domain/models/post_feeds_model.dart';
 
 class PostGrid extends HookConsumerWidget {
-  final List<CreatePostModel> posts;
+  final List<PostFeedsModel> posts;
 
   PostGrid({required this.posts});
   @override

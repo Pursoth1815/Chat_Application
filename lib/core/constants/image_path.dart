@@ -11,4 +11,6 @@ class ImagePath {
   static const String user_profile = "assets/images/user_profile.png";
   static const String edit_user_icon = "assets/images/edit_user.png";
   static const String edit_icon = "assets/images/edit.png";
+  static const String bell_icon = "assets/images/bell_icon.png";
+  static const String shield = "assets/images/shield.png";
 }
