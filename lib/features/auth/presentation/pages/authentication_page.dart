@@ -8,7 +8,7 @@ import 'package:neighborgood/features/auth/presentation/providers/auth_provider.
 class AuthenticationScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageController = ref.watch(pageControllerProvider);
+    final pageController = ref.watch(authPageControllerProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

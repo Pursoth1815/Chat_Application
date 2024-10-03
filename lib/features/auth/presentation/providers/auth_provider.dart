@@ -7,7 +7,7 @@ import 'package:neighborgood/features/auth/domain/models/register_user_model.dar
 import 'package:neighborgood/features/auth/domain/usecases/sigin_in_usecase.dart';
 import 'package:neighborgood/features/auth/domain/usecases/sign_up_usecase.dart';
 
-final pageControllerProvider = Provider<PageController>((ref) {
+final authPageControllerProvider = Provider<PageController>((ref) {
   return PageController();
 });
 

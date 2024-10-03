@@ -16,7 +16,7 @@ import 'package:neighborgood/features/auth/presentation/widgets/other_signin_opt
 class LoginScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageController = ref.watch(pageControllerProvider);
+    final pageController = ref.watch(authPageControllerProvider);
 
     final usernameController = useTextEditingController();
     final passwordController = useTextEditingController();
@@ -127,6 +127,9 @@ class LoginScreen extends HookConsumerWidget {
               ),
               OtherSignInOptions(
                 onTap: () {
+                  usernameController.clear();
+                  passwordController.clear();
+
                   pageController.animateToPage(
                     1,
                     duration: Duration(milliseconds: 800),
