@@ -29,19 +29,18 @@ class RegistrationScreen extends HookConsumerWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       body: Container(
-        margin: EdgeInsets.only(top: AppConstants.appBarHeight + 20),
+        margin: EdgeInsets.only(top: AppConstants.appBarHeight - 10),
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Image.asset(
                 ImagePath.appName,
-                width: AppConstants.screenWidth * 0.7,
                 height: 55,
                 fit: BoxFit.cover,
               ),
               SizedBox(
-                height: 25,
+                height: 20,
               ),
               CustomText(
                 size: 20,
@@ -117,7 +116,7 @@ class RegistrationScreen extends HookConsumerWidget {
                 padding: const EdgeInsets.only(top: 20),
                 child: CustomButton(
                   text: "Create Account",
-                  fontSize: 18,
+                  fontSize: 14,
                   onPressed: () async {
                     if (fullNameController.text.isEmpty || usernameController.text.isEmpty || passwordController.text.isEmpty || confirmPasswordController.text.isEmpty) {
                       showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'All fields are required.', position: SnackPosition.top);
@@ -149,21 +148,24 @@ class RegistrationScreen extends HookConsumerWidget {
                   width: AppConstants.screenWidth,
                 ),
               ),
-              OtherSignInOptions(
-                onTap: () {
-                  fullNameController.clear();
-                  usernameController.clear();
-                  passwordController.clear();
-                  confirmPasswordController.clear();
+              Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: OtherSignInOptions(
+                  onTap: () {
+                    fullNameController.clear();
+                    usernameController.clear();
+                    passwordController.clear();
+                    confirmPasswordController.clear();
 
-                  pageController.animateToPage(
-                    0,
-                    duration: Duration(milliseconds: 800),
-                    curve: Curves.linearToEaseOut,
-                  );
-                },
-                otherOptionManditoryText: 'Login',
-                otherOptionText: 'Already have an account? ',
+                    pageController.animateToPage(
+                      0,
+                      duration: Duration(milliseconds: 800),
+                      curve: Curves.linearToEaseOut,
+                    );
+                  },
+                  otherOptionManditoryText: 'Login',
+                  otherOptionText: 'Already have an account? ',
+                ),
               ),
             ],
           ),

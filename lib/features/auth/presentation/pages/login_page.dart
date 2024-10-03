@@ -1,17 +1,22 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:neighborgood/core/constants/app_colors.dart';
 import 'package:neighborgood/core/constants/app_constants.dart';
 import 'package:neighborgood/core/constants/image_path.dart';
+import 'package:neighborgood/core/shared/providers/user_state_provider.dart';
 import 'package:neighborgood/core/shared/widgets/custom_button.dart';
 import 'package:neighborgood/core/shared/widgets/custom_check_box.dart';
 import 'package:neighborgood/core/shared/widgets/custom_text.dart';
 import 'package:neighborgood/core/shared/widgets/custom_text_view.dart';
 import 'package:neighborgood/core/utils/snack_bar_utils.dart';
+import 'package:neighborgood/core/utils/utils.dart';
 import 'package:neighborgood/features/auth/data/entities/auth_entity.dart';
 import 'package:neighborgood/features/auth/presentation/providers/auth_provider.dart';
 import 'package:neighborgood/features/auth/presentation/widgets/other_signin_options_widget.dart';
+import 'package:neighborgood/features/home/presentation/pages/home_page.dart';
 
 class LoginScreen extends HookConsumerWidget {
   @override
@@ -25,19 +30,20 @@ class LoginScreen extends HookConsumerWidget {
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       body: Container(
-        margin: EdgeInsets.only(top: AppConstants.appBarHeight + 40),
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        margin: EdgeInsets.only(top: AppConstants.appBarHeight - 10),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20.0,
+        ),
         child: SingleChildScrollView(
           child: Column(
             children: [
               Image.asset(
                 ImagePath.appName,
-                width: AppConstants.screenWidth * 0.7,
                 height: 55,
                 fit: BoxFit.cover,
               ),
               SizedBox(
-                height: AppBar().preferredSize.height,
+                height: 30,
               ),
               CustomText(
                 size: 20,
@@ -116,8 +122,15 @@ class LoginScreen extends HookConsumerWidget {
                       );
                       usernameController.clear();
                       passwordController.clear();
+
                       if (res.status) {
+                        final userStateNotifier = ref.read(userStateNotifierProvider.notifier);
+
+                        log('res.responce: ${res.responce}');
+                        log('res.responce: ${res.responce.user_id}');
+                        userStateNotifier.setUser(res.responce);
                         //Navigation
+                        Utils().navigateTo(context, HomeScreen());
                       }
                     }
                   },

@@ -22,155 +22,164 @@ class CreatePostScreen extends HookConsumerWidget {
     final descriptionController = useTextEditingController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
-        title: Text('Create post'),
+        title: Text(
+          'Create post',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+        ),
         leading: Icon(Icons.arrow_back_rounded),
         backgroundColor: AppColors.white,
       ),
-      backgroundColor: AppColors.white,
-      body: Container(
-        width: AppConstants.screenWidth,
-        height: AppConstants.screenHeight - AppConstants.appBarHeight,
-        margin: EdgeInsets.only(top: AppBar().preferredSize.height),
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: [
-            Container(
-              width: AppConstants.screenWidth * 0.9,
-              height: AppConstants.screenWidth * 0.5,
-              child: Consumer(builder: (context, ref, child) {
-                final imageFile = ref.watch(fileProvider);
-                if (imageFile != null) {
-                  return InkWell(
-                    onTap: () async => ref.read(fileProvider.notifier).state = await Utils().pickImage() ?? null,
-                    child: Container(
-                      height: AppConstants.screenHeight * 0.5,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(image: FileImage(imageFile), fit: BoxFit.cover, filterQuality: FilterQuality.high),
-                        borderRadius: BorderRadius.circular(15),
+      body: SingleChildScrollView(
+        child: Container(
+          width: AppConstants.screenWidth,
+          height: AppConstants.screenHeight - kToolbarHeight,
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              Container(
+                width: AppConstants.screenWidth * 0.9,
+                height: AppConstants.screenWidth * 0.5,
+                margin: EdgeInsets.only(top: kToolbarHeight - 20),
+                child: Consumer(builder: (context, ref, child) {
+                  final imageFile = ref.watch(fileProvider);
+                  if (imageFile != null) {
+                    return InkWell(
+                      onTap: () async => ref.read(fileProvider.notifier).state = await Utils().pickImage() ?? null,
+                      child: Container(
+                        height: AppConstants.screenHeight * 0.5,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: FileImage(imageFile), fit: BoxFit.cover, filterQuality: FilterQuality.high),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
-                    ),
-                  );
-                } else {
-                  return CustomPaint(
-                    painter: DashedPainter(color: AppColors.black.withOpacity(0.25), strokeWidth: 1, dashPattern: [5, 5], radius: Radius.circular(15)),
-                    child: Container(
-                      height: AppConstants.screenHeight * 0.5,
-                      decoration: BoxDecoration(
-                        color: AppColors.grayLite,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: InkWell(
-                          onTap: () async => ref.read(fileProvider.notifier).state = await Utils().pickImage() ?? null,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Spacer(),
-                              Image.asset(
-                                ImagePath.file_upload,
-                                width: AppConstants.screenWidth * 0.1,
-                                height: AppConstants.screenWidth * 0.1,
-                                filterQuality: FilterQuality.high,
-                                color: AppColors.black,
-                                fit: BoxFit.cover,
-                              ),
-                              Spacer(),
-                              CustomText(
-                                text: 'Upload a Image here',
-                                size: 15,
-                                fontWeight: FontWeight.w500,
-                                style: TextStyle(decoration: TextDecoration.underline),
-                              ),
-                              CustomText(
-                                padding: EdgeInsets.symmetric(vertical: 15),
-                                text: 'JPG or PNG file size no more than 10MB',
-                                size: 12,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.black.withOpacity(0.5),
-                              ),
-                              Spacer(),
-                            ],
+                    );
+                  } else {
+                    return CustomPaint(
+                      painter: DashedPainter(color: AppColors.black.withOpacity(0.25), strokeWidth: 1, dashPattern: [5, 5], radius: Radius.circular(15)),
+                      child: Container(
+                        height: AppConstants.screenHeight * 0.5,
+                        decoration: BoxDecoration(
+                          color: AppColors.grayLite,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Center(
+                          child: InkWell(
+                            onTap: () async => ref.read(fileProvider.notifier).state = await Utils().pickImage() ?? null,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Spacer(),
+                                Image.asset(
+                                  ImagePath.file_upload,
+                                  width: AppConstants.screenWidth * 0.1,
+                                  height: AppConstants.screenWidth * 0.1,
+                                  filterQuality: FilterQuality.high,
+                                  color: AppColors.black,
+                                  fit: BoxFit.cover,
+                                ),
+                                Spacer(),
+                                CustomText(
+                                  text: 'Upload a Image here',
+                                  size: 14,
+                                  fontWeight: FontWeight.w500,
+                                  style: TextStyle(decoration: TextDecoration.underline),
+                                ),
+                                CustomText(
+                                  padding: EdgeInsets.symmetric(vertical: 15),
+                                  text: 'JPG or PNG file size no more than 10MB',
+                                  size: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.black.withOpacity(0.5),
+                                ),
+                                Spacer(),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                }
-              }),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            CustomText(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              size: 14,
-              isManditory: true,
-              text: 'Event Title ',
-              fontWeight: FontWeight.bold,
-              positionAlign: MainAxisAlignment.start,
-              color: AppColors.black,
-            ),
-            CustomTextField(
-              controller: titleController,
-              hintText: 'Post Title',
-              hintStyle: TextStyle(color: AppColors.black.withOpacity(0.5), fontSize: 12, fontWeight: FontWeight.w400),
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            CustomText(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              size: 14,
-              isManditory: true,
-              text: 'Discription ',
-              fontWeight: FontWeight.bold,
-              positionAlign: MainAxisAlignment.start,
-              color: AppColors.black,
-            ),
-            CustomTextField(
-              controller: descriptionController,
-              hintText: 'Write your discription...',
-              hintStyle: TextStyle(color: AppColors.black.withOpacity(0.5), fontSize: 12, fontWeight: FontWeight.w400),
-            ),
-            Spacer(),
-            Container(
-              margin: EdgeInsets.only(bottom: AppConstants.appBarHeight - 15),
-              child: CustomButton(
-                onPressed: () async {
-                  if (titleController.text.isEmpty || descriptionController.text.isEmpty || ref.read(fileProvider) == null) {
-                    showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'All fields are required.', position: SnackPosition.top);
-                    return;
-                  } else {
-                    AuthResponse uploadFileRes = await ref.read(createPostStateProvider.notifier).uploadFile(ref.read(fileProvider)!);
+                    );
+                  }
+                }),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              CustomText(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                size: 12,
+                isManditory: true,
+                text: 'Event Title ',
+                fontWeight: FontWeight.bold,
+                positionAlign: MainAxisAlignment.start,
+                color: AppColors.black,
+              ),
+              CustomTextField(
+                controller: titleController,
+                hintText: 'Post Title',
+                hintStyle: TextStyle(color: AppColors.black.withOpacity(0.5), fontSize: 12, fontWeight: FontWeight.w400),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              CustomText(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                size: 12,
+                isManditory: true,
+                text: 'Discription ',
+                fontWeight: FontWeight.bold,
+                positionAlign: MainAxisAlignment.start,
+                color: AppColors.black,
+              ),
+              CustomTextField(
+                controller: descriptionController,
+                hintText: 'Write your discription...',
+                hintStyle: TextStyle(color: AppColors.black.withOpacity(0.5), fontSize: 12, fontWeight: FontWeight.w400),
+              ),
+              Spacer(),
+              Container(
+                margin: EdgeInsets.only(bottom: AppConstants.appBarHeight - 15),
+                child: CustomButton(
+                  onPressed: () async {
+                    if (titleController.text.isEmpty || descriptionController.text.isEmpty || ref.read(fileProvider) == null) {
+                      showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'All fields are required.', position: SnackPosition.top);
+                      return;
+                    } else {
+                      AuthResponse uploadFileRes = await ref.read(createPostStateProvider.notifier).uploadFile(ref.read(fileProvider)!);
 
-                    if (uploadFileRes.status) {
-                      if (uploadFileRes.message.isEmpty) {
-                        showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'Image upload Failed', position: SnackPosition.top);
-                        return;
-                      } else {
-                        CreatePostModel post = CreatePostModel(title: titleController.text, description: descriptionController.text, post_image_path: uploadFileRes.message);
-                        AuthResponse uploadPostRes = await ref.read(createPostStateProvider.notifier).uploadPost(post);
+                      if (uploadFileRes.status) {
+                        if (uploadFileRes.message.isEmpty) {
+                          showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'Image upload Failed', position: SnackPosition.top);
+                          return;
+                        } else {
+                          CreatePostModel post = CreatePostModel(title: titleController.text, description: descriptionController.text, post_image_path: uploadFileRes.message);
+                          AuthResponse uploadPostRes = await ref.read(createPostStateProvider.notifier).uploadPost(post);
 
-                        showCustomSnackbar(
-                          context,
-                          status: uploadPostRes.status ? SnackBarStatus.success : SnackBarStatus.failure,
-                          message: uploadPostRes.message,
-                        );
-                        if (uploadPostRes.status) {
-                          // Navigation
+                          showCustomSnackbar(
+                            context,
+                            status: uploadPostRes.status ? SnackBarStatus.success : SnackBarStatus.failure,
+                            message: uploadPostRes.message,
+                          );
+                          titleController.clear();
+                          descriptionController.clear();
+                          ref.read(fileProvider.notifier).state = null;
+                          if (uploadPostRes.status) {
+                            // Navigation
+                          }
                         }
                       }
                     }
-                  }
-                },
-                text: "Share",
-                fontSize: 14,
-                borderRadius: 12,
-                width: AppConstants.screenWidth,
-              ),
-            )
-          ],
+                  },
+                  text: "Share",
+                  fontSize: 14,
+                  borderRadius: 12,
+                  width: AppConstants.screenWidth,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

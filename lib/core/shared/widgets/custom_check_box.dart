@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:neighborgood/core/constants/app_colors.dart';
 
 final checkBoxProvider = StateProvider<bool>((ref) => false);
 
@@ -15,11 +16,16 @@ class CustomCheckbox extends HookConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Checkbox(
-          value: rememberMe,
-          onChanged: (value) {
-            ref.read(checkBoxProvider.notifier).state = value ?? false;
-          },
+        Transform.scale(
+          scale: 0.8,
+          child: Checkbox(
+            value: rememberMe,
+            checkColor: AppColors.white,
+            activeColor: Colors.green,
+            onChanged: (value) {
+              ref.read(checkBoxProvider.notifier).state = value ?? false;
+            },
+          ),
         ),
         GestureDetector(
           onTap: () {
@@ -27,7 +33,7 @@ class CustomCheckbox extends HookConsumerWidget {
           },
           child: Text(
             checkBoxText,
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 12),
           ),
         ),
       ],

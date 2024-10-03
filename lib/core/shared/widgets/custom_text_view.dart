@@ -21,7 +21,7 @@ class CustomTextField extends HookWidget {
   const CustomTextField({
     Key? key,
     this.width = double.infinity,
-    this.height = 50,
+    this.height = 40,
     this.borderRadius = 15.0,
     this.backgroundColor = Colors.white,
     this.textColor = AppColors.blackLite,
@@ -71,7 +71,7 @@ class CustomTextField extends HookWidget {
                   onTextChanged!(value);
                 }
               },
-              style: textStyle ?? TextStyle(fontSize: 14, color: textColor.withOpacity(0.8)),
+              style: textStyle ?? TextStyle(fontSize: 12, color: textColor.withOpacity(0.8)),
               obscureText: isPasswordField ? obscureText.value : false,
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -79,7 +79,7 @@ class CustomTextField extends HookWidget {
                 contentPadding: const EdgeInsets.symmetric(vertical: 12.0),
                 hintStyle: hintStyle ??
                     TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       color: AppColors.black.withOpacity(0.5),
                     ),
                 suffixIcon: isPasswordField

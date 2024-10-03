@@ -23,7 +23,7 @@ class CustomButton extends HookConsumerWidget {
     required this.onPressed,
     this.width = 200,
     this.fontSize = 14,
-    this.height = 50,
+    this.height = 40,
     this.letterSpacing = 1,
     this.color = AppColors.colorPrimary,
     this.shadowColor = AppColors.white,

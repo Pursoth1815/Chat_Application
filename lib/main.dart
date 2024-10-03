@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:neighborgood/core/constants/app_constants.dart';
 import 'package:neighborgood/core/services/network_services/network_listiner.dart';
-import 'package:neighborgood/features/create_post/presentation/pages/create_post_screen.dart';
+import 'package:neighborgood/features/auth/presentation/pages/authentication_page.dart';
 import 'package:neighborgood/firebase_options.dart';
 
 void main() async {
@@ -29,7 +29,7 @@ class MainApp extends StatelessWidget {
 
     return MaterialApp(
       home: Scaffold(
-        body: NetworkListener(child: CreatePostScreen()),
+        body: NetworkListener(child: AuthenticationScreen()),
       ),
     );
   }
