@@ -108,8 +108,6 @@ class LoginScreen extends HookConsumerWidget {
                   fontSize: 16,
                   letterSpacing: 2,
                   onPressed: () async {
-                    usernameController.text = '7448944737';
-                    passwordController.text = 'test';
                     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
                       showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'All fields are required.', position: SnackPosition.top);
                       return;
