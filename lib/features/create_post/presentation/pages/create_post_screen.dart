@@ -68,8 +68,7 @@ class CreatePostScreen extends HookConsumerWidget {
                     );
                   } else {
                     return CustomPaint(
-                      painter:
-                          DashedPainter(color: AppColors.black.withOpacity(0.25), strokeWidth: 1, dashPattern: [5, 5], radius: Radius.circular(15)),
+                      painter: DashedPainter(color: AppColors.black.withOpacity(0.25), strokeWidth: 1, dashPattern: [5, 5], radius: Radius.circular(15)),
                       child: Container(
                         height: AppConstants.screenHeight * 0.5,
                         decoration: BoxDecoration(
@@ -146,6 +145,9 @@ class CreatePostScreen extends HookConsumerWidget {
               ),
               CustomTextField(
                 controller: descriptionController,
+                height: 115,
+                maxLines: 2,
+                borderRadius: 12,
                 hintText: 'Write your discription...',
                 hintStyle: TextStyle(color: AppColors.black.withOpacity(0.5), fontSize: 12, fontWeight: FontWeight.w400),
               ),
@@ -165,12 +167,8 @@ class CreatePostScreen extends HookConsumerWidget {
                           showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'Image upload Failed', position: SnackPosition.top);
                           return;
                         } else {
-                          PostFeedsModel post = PostFeedsModel(
-                              pid: 0,
-                              user_id: user!.user_id,
-                              title: titleController.text,
-                              description: descriptionController.text,
-                              post_image_path: uploadFileRes.message);
+                          PostFeedsModel post =
+                              PostFeedsModel(pid: 0, user_id: user!.user_id, title: titleController.text, description: descriptionController.text, post_image_path: uploadFileRes.message);
                           AuthResponse uploadPostRes = await ref.read(createPostStateProvider.notifier).uploadPost(post);
 
                           showCustomSnackbar(
@@ -182,7 +180,8 @@ class CreatePostScreen extends HookConsumerWidget {
                           descriptionController.clear();
                           ref.read(fileProvider.notifier).state = null;
                           if (uploadPostRes.status) {
-                            // Navigation
+                            pageController.jumpToPage(0);
+                            ref.read(bottomNavigationIndexProvider.notifier).state = 0;
                           }
                         }
                       }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:neighborgood/core/constants/app_colors.dart';
 
-class CustomText extends StatelessWidget {
+class CustomText extends StatefulWidget {
   final String text;
   final String manditoryText;
   final double size;
@@ -8,13 +9,13 @@ class CustomText extends StatelessWidget {
   final Color manditoryTextColor;
   final FontWeight fontWeight;
   final TextAlign textAlign;
-  final dynamic maxLines;
-  final TextOverflow overflow;
+  final int? maxLines;
   final EdgeInsetsGeometry padding;
   final bool isManditory;
   final TextStyle? style;
   final MainAxisAlignment positionAlign;
   final VoidCallback? onTap;
+  final bool wrappedText;
 
   const CustomText({
     Key? key,
@@ -25,9 +26,9 @@ class CustomText extends StatelessWidget {
     this.manditoryTextColor = Colors.red,
     this.fontWeight = FontWeight.normal,
     this.textAlign = TextAlign.start,
-    this.maxLines = null,
-    this.overflow = TextOverflow.ellipsis,
+    this.maxLines,
     this.isManditory = false,
+    this.wrappedText = false,
     this.padding = const EdgeInsets.all(0),
     this.positionAlign = MainAxisAlignment.center,
     this.style,
@@ -35,48 +36,74 @@ class CustomText extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _CustomTextState createState() => _CustomTextState();
+}
+
+class _CustomTextState extends State<CustomText> {
+  bool isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding,
-      child: Row(
-        mainAxisAlignment: positionAlign,
+      padding: widget.padding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            text,
-            textAlign: textAlign,
-            maxLines: maxLines,
-            overflow: overflow,
-            style: style?.copyWith(
-                  fontSize: size,
-                  color: color,
-                  fontWeight: fontWeight,
+            widget.text,
+            textAlign: widget.textAlign,
+            maxLines: isExpanded ? null : widget.maxLines,
+            overflow: isExpanded ? null : TextOverflow.ellipsis,
+            style: widget.style?.copyWith(
+                  fontSize: widget.size,
+                  color: widget.color,
+                  fontWeight: widget.fontWeight,
                 ) ??
                 TextStyle(
-                  fontSize: size,
-                  color: color,
-                  fontWeight: fontWeight,
+                  fontSize: widget.size,
+                  color: widget.color,
+                  fontWeight: widget.fontWeight,
                 ),
           ),
-          if (isManditory)
-            InkWell(
-              onTap: onTap,
+          if (!_isExpandedCondition() && widget.wrappedText)
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
               child: Text(
-                manditoryText,
-                textAlign: textAlign,
-                style: style?.copyWith(
-                      fontSize: size,
-                      color: color,
-                      fontWeight: fontWeight,
-                    ) ??
-                    TextStyle(
-                      fontSize: size,
-                      color: manditoryTextColor,
-                      fontWeight: fontWeight,
-                    ),
+                isExpanded ? 'Show Less' : 'Show More',
+                style: TextStyle(
+                  color: AppColors.grayDark,
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
+                ),
               ),
             ),
         ],
       ),
     );
+  }
+
+  bool _isExpandedCondition() {
+    if (widget.maxLines == null || isExpanded) return false;
+
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: widget.text,
+        style: TextStyle(fontSize: widget.size),
+      ),
+      maxLines: widget.maxLines,
+      textAlign: widget.textAlign,
+      textDirection: TextDirection.ltr,
+    );
+
+    textPainter.layout(maxWidth: MediaQuery.of(context).size.width);
+
+    final totalHeight = textPainter.size.height;
+    final maxHeight = widget.size * (widget.maxLines ?? 1) * 1.2;
+
+    return totalHeight > maxHeight;
   }
 }

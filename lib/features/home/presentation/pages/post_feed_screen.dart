@@ -45,7 +45,7 @@ class PostFeedScreen extends HookConsumerWidget {
                                   margin: EdgeInsets.symmetric(horizontal: 10),
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    image: DecorationImage(image: AssetImage(ImagePath.user_profile)),
+                                    image: DecorationImage(image: AssetImage(ImagePath.dog2), fit: BoxFit.cover),
                                   ),
                                 ),
                                 Column(
@@ -73,31 +73,29 @@ class PostFeedScreen extends HookConsumerWidget {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  padding: EdgeInsets.only(top: 8),
-                                  size: 14,
-                                  text: feedsList[index].title,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                CustomText(
-                                  padding: EdgeInsets.symmetric(vertical: 2),
-                                  size: 12,
-                                  text: feedsList[index].description,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.black,
-                                ),
-                              ],
-                            ),
-                          ],
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: CustomText(
+                          padding: EdgeInsets.only(top: 8),
+                          size: 14,
+                          text: feedsList[index].title,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: CustomText(
+                          padding: EdgeInsets.symmetric(vertical: 2),
+                          size: 12,
+                          text: feedsList[index].description,
+                          wrappedText: feedsList[index].description.length > 100 ? true : false,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black,
+                          maxLines: 1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(18),
@@ -112,9 +110,7 @@ class PostFeedScreen extends HookConsumerWidget {
                             return Center(
                                 child: CircularProgressIndicator(
                               color: AppColors.gray,
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                                  : null,
+                              value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1) : null,
                             ));
                           },
                           fit: BoxFit.cover,
@@ -123,33 +119,74 @@ class PostFeedScreen extends HookConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.heart_broken, color: Colors.blue),
-                                onPressed: () {},
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.comment, color: Colors.blue),
-                                onPressed: () {},
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.telegram, color: Colors.blue),
-                                onPressed: () {},
-                              ),
-                            ],
+                          Container(
+                            width: AppConstants.screenWidth * 0.3,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                InkWell(
+                                  onTap: () async {
+                                    await ref.read(feedListProvider.notifier).actionButtonsTrigger(ActionBtn.like, feedsList[index].pid);
+                                  },
+                                  child: Image.asset(
+                                    feedsList[index].liked ? ImagePath.heart_filled : ImagePath.heart,
+                                    height: 24,
+                                    width: 24,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Image.asset(
+                                    ImagePath.comment,
+                                    height: 24,
+                                    width: 24,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {},
+                                  child: Image.asset(
+                                    ImagePath.send,
+                                    height: 24,
+                                    width: 24,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Row(
                             children: [
                               IconButton(
                                 iconSize: 24,
                                 icon: Icon(feedsList[index].saved ? Icons.bookmark : Icons.bookmark_border_rounded, color: AppColors.black),
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await ref.read(feedListProvider.notifier).actionButtonsTrigger(ActionBtn.save, feedsList[index].pid);
+                                },
                               ),
                             ],
                           ),
                         ],
                       ),
+                      Container(
+                        height: 35,
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(18)),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              ImagePath.user_profile,
+                              height: 24,
+                              width: 24,
+                            ),
+                            CustomText(
+                              padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                              size: 10,
+                              text: 'Add a comment...',
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.black.withOpacity(0.3),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

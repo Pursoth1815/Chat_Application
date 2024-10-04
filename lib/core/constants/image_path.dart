@@ -13,4 +13,9 @@ class ImagePath {
   static const String edit_icon = "assets/images/edit.png";
   static const String bell_icon = "assets/images/bell_icon.png";
   static const String shield = "assets/images/shield.png";
+  static const String heart_filled = "assets/images/heart_filled.png";
+  static const String heart = "assets/images/heart.png";
+  static const String send = "assets/images/send.png";
+  static const String comment = "assets/images/comment.png";
+  static const String dog2 = "assets/images/dog2.jpg";
 }

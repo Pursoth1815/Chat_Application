@@ -17,6 +17,7 @@ class CustomTextField extends HookWidget {
   final TextStyle? hintStyle;
   final bool isPasswordField;
   final IconData? prefixIcon;
+  final dynamic maxLines;
 
   const CustomTextField({
     Key? key,
@@ -34,6 +35,7 @@ class CustomTextField extends HookWidget {
     this.hintStyle,
     this.isPasswordField = false,
     this.prefixIcon,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
@@ -73,6 +75,7 @@ class CustomTextField extends HookWidget {
               },
               style: textStyle ?? TextStyle(fontSize: 12, color: textColor.withOpacity(0.8)),
               obscureText: isPasswordField ? obscureText.value : false,
+              maxLines: maxLines,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hintText,
