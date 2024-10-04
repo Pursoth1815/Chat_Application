@@ -94,10 +94,12 @@ class CreatePostScreen extends HookConsumerWidget {
                                 CustomText(
                                   text: 'Upload a Image here',
                                   size: 14,
+                                  alignment: Alignment.center,
                                   fontWeight: FontWeight.w500,
                                   style: TextStyle(decoration: TextDecoration.underline),
                                 ),
                                 CustomText(
+                                  alignment: Alignment.center,
                                   padding: EdgeInsets.symmetric(vertical: 15),
                                   text: 'JPG or PNG file size no more than 10MB',
                                   size: 12,

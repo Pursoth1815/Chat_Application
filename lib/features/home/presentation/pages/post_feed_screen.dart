@@ -128,10 +128,14 @@ class PostFeedScreen extends HookConsumerWidget {
                                   onTap: () async {
                                     await ref.read(feedListProvider.notifier).actionButtonsTrigger(ActionBtn.like, feedsList[index].pid);
                                   },
-                                  child: Image.asset(
-                                    feedsList[index].liked ? ImagePath.heart_filled : ImagePath.heart,
-                                    height: 24,
-                                    width: 24,
+                                  child: SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: Image.asset(
+                                      feedsList[index].liked ? ImagePath.heart_filled : ImagePath.heart,
+                                      height: 24,
+                                      width: 24,
+                                    ),
                                   ),
                                 ),
                                 InkWell(

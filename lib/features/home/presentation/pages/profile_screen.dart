@@ -61,8 +61,7 @@ class ProfileScreen extends HookConsumerWidget {
     );
   }
 
-  Container _profile_card_widget(
-      RegisterUserModel? user, List<PostFeedsModel> profilePostList, PageController pageController, WidgetRef ref, ValueNotifier<int> selectedIndex) {
+  Container _profile_card_widget(RegisterUserModel? user, List<PostFeedsModel> profilePostList, PageController pageController, WidgetRef ref, ValueNotifier<int> selectedIndex) {
     return Container(
       margin: EdgeInsets.only(top: 25),
       child: Column(
@@ -79,12 +78,14 @@ class ProfileScreen extends HookConsumerWidget {
             padding: EdgeInsets.only(top: 8),
             size: 16,
             text: user!.fullName,
+            alignment: Alignment.center,
             fontWeight: FontWeight.bold,
           ),
           CustomText(
             padding: EdgeInsets.symmetric(vertical: 2),
             size: 10,
             text: 'Intrested In Coding',
+            alignment: Alignment.center,
             fontWeight: FontWeight.w400,
             color: AppColors.black.withOpacity(0.5),
           ),

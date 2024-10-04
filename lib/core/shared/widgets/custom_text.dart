@@ -3,6 +3,8 @@ import 'package:neighborgood/core/constants/app_colors.dart';
 
 class CustomText extends StatefulWidget {
   final String text;
+  final MainAxisAlignment rowAlignment;
+  final AlignmentGeometry alignment;
   final String manditoryText;
   final double size;
   final Color color;
@@ -20,6 +22,8 @@ class CustomText extends StatefulWidget {
   const CustomText({
     Key? key,
     required this.text,
+    this.rowAlignment = MainAxisAlignment.start,
+    this.alignment = Alignment.centerLeft,
     this.manditoryText = '*',
     this.size = 14.0,
     this.color = Colors.black,
@@ -46,24 +50,67 @@ class _CustomTextState extends State<CustomText> {
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.padding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Wrap(
         children: [
-          Text(
-            widget.text,
-            textAlign: widget.textAlign,
-            maxLines: isExpanded ? null : widget.maxLines,
-            overflow: isExpanded ? null : TextOverflow.ellipsis,
-            style: widget.style?.copyWith(
-                  fontSize: widget.size,
-                  color: widget.color,
-                  fontWeight: widget.fontWeight,
-                ) ??
-                TextStyle(
-                  fontSize: widget.size,
-                  color: widget.color,
-                  fontWeight: widget.fontWeight,
-                ),
+          Align(
+            alignment: widget.alignment,
+            child: widget.isManditory
+                ? Row(
+                    mainAxisAlignment: widget.rowAlignment,
+                    children: [
+                      Text(
+                        widget.text,
+                        textAlign: widget.textAlign,
+                        maxLines: isExpanded ? null : widget.maxLines,
+                        overflow: isExpanded ? null : TextOverflow.ellipsis,
+                        style: widget.style?.copyWith(
+                              fontSize: widget.size,
+                              color: widget.color,
+                              fontWeight: widget.fontWeight,
+                            ) ??
+                            TextStyle(
+                              fontSize: widget.size,
+                              color: widget.color,
+                              fontWeight: widget.fontWeight,
+                            ),
+                      ),
+                      InkWell(
+                        onTap: widget.onTap,
+                        child: Text(
+                          widget.manditoryText,
+                          textAlign: widget.textAlign,
+                          maxLines: isExpanded ? null : widget.maxLines,
+                          overflow: isExpanded ? null : TextOverflow.ellipsis,
+                          style: widget.style?.copyWith(
+                                fontSize: widget.size,
+                                color: widget.manditoryTextColor,
+                                fontWeight: widget.fontWeight,
+                              ) ??
+                              TextStyle(
+                                fontSize: widget.size,
+                                color: widget.manditoryTextColor,
+                                fontWeight: widget.fontWeight,
+                              ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Text(
+                    widget.text,
+                    textAlign: widget.textAlign,
+                    maxLines: isExpanded ? null : widget.maxLines,
+                    overflow: isExpanded ? null : TextOverflow.ellipsis,
+                    style: widget.style?.copyWith(
+                          fontSize: widget.size,
+                          color: widget.color,
+                          fontWeight: widget.fontWeight,
+                        ) ??
+                        TextStyle(
+                          fontSize: widget.size,
+                          color: widget.color,
+                          fontWeight: widget.fontWeight,
+                        ),
+                  ),
           ),
           if (!_isExpandedCondition() && widget.wrappedText)
             GestureDetector(

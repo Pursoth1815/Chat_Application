@@ -45,6 +45,7 @@ class LoginScreen extends HookConsumerWidget {
               ),
               CustomText(
                 size: 20,
+                alignment: Alignment.center,
                 text: 'Welcome Back!',
                 fontWeight: FontWeight.bold,
               ),
@@ -52,6 +53,7 @@ class LoginScreen extends HookConsumerWidget {
                 padding: EdgeInsets.symmetric(vertical: 8),
                 size: 12,
                 text: 'Let’s login for explore continues',
+                alignment: Alignment.center,
                 fontWeight: FontWeight.w400,
                 color: AppColors.black.withOpacity(0.5),
               ),
@@ -91,6 +93,7 @@ class LoginScreen extends HookConsumerWidget {
                 padding: EdgeInsets.symmetric(vertical: 5),
                 size: 12,
                 text: 'Forgot Password?',
+                alignment: Alignment.centerRight,
                 fontWeight: FontWeight.normal,
                 positionAlign: MainAxisAlignment.end,
                 color: AppColors.orange,
