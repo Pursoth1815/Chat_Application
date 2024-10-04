@@ -28,6 +28,7 @@ class MainApp extends StatelessWidget {
     AppConstants.init(context);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: NetworkListener(child: AuthenticationScreen()),
       ),
