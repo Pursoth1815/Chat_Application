@@ -118,17 +118,23 @@ class RegistrationScreen extends HookConsumerWidget {
                   text: "Create Account",
                   fontSize: 14,
                   onPressed: () async {
-                    if (fullNameController.text.isEmpty || usernameController.text.isEmpty || passwordController.text.isEmpty || confirmPasswordController.text.isEmpty) {
+                    if (fullNameController.text.trimLeft().trimRight().isEmpty ||
+                        usernameController.text.trimLeft().trimRight().isEmpty ||
+                        passwordController.text.trimLeft().trimRight().isEmpty ||
+                        confirmPasswordController.text.trimLeft().trimRight().isEmpty) {
                       showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'All fields are required.', position: SnackPosition.top);
                       return;
-                    } else if (confirmPasswordController.text != passwordController.text) {
+                    } else if (confirmPasswordController.text.trimLeft().trimRight() != passwordController.text.trimLeft().trimRight()) {
                       showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'Password & Confirm password are not same.', position: SnackPosition.top);
                       return;
                     } else if (!termsController) {
                       showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'Accept the Terms& condition', position: SnackPosition.top);
                       return;
                     } else {
-                      final userDetails = RegisterUserModel(fullName: fullNameController.text, password: confirmPasswordController.text, username: usernameController.text);
+                      final userDetails = RegisterUserModel(
+                          fullName: fullNameController.text.trimLeft().trimRight(),
+                          password: confirmPasswordController.text.trimLeft().trimRight(),
+                          username: usernameController.text.trimLeft().trimRight());
                       AuthResponse res = await ref.read(authStateProvider.notifier).signUp(userDetails);
                       showCustomSnackbar(
                         context,

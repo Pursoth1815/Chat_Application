@@ -161,7 +161,7 @@ class CreatePostScreen extends HookConsumerWidget {
                 margin: EdgeInsets.only(bottom: AppConstants.appBarHeight - 15),
                 child: CustomButton(
                   onPressed: () async {
-                    if (titleController.text.isEmpty || descriptionController.text.isEmpty || ref.read(fileProvider) == null) {
+                    if (titleController.text.trimLeft().trimRight().isEmpty || descriptionController.text.trimLeft().trimRight().isEmpty || ref.read(fileProvider) == null) {
                       showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'All fields are required.', position: SnackPosition.top);
                       return;
                     } else {
@@ -172,8 +172,12 @@ class CreatePostScreen extends HookConsumerWidget {
                           showCustomSnackbar(context, status: SnackBarStatus.failure, message: 'Image upload Failed', position: SnackPosition.top);
                           return;
                         } else {
-                          PostFeedsModel post =
-                              PostFeedsModel(pid: 0, user_id: user!.user_id, title: titleController.text, description: descriptionController.text, post_image_path: uploadFileRes.message);
+                          PostFeedsModel post = PostFeedsModel(
+                              pid: 0,
+                              user_id: user!.user_id,
+                              title: titleController.text.trimLeft().trimRight(),
+                              description: descriptionController.text.trimLeft().trimRight(),
+                              post_image_path: uploadFileRes.message);
                           AuthResponse uploadPostRes = await ref.read(createPostStateProvider.notifier).uploadPost(post);
 
                           showCustomSnackbar(

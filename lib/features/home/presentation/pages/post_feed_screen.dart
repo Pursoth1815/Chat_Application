@@ -129,12 +129,13 @@ class PostFeedScreen extends HookConsumerWidget {
                                     await ref.read(feedListProvider.notifier).actionButtonsTrigger(ActionBtn.like, feedsList[index].pid);
                                   },
                                   child: SizedBox(
-                                    width: 30,
-                                    height: 30,
+                                    width: 20,
+                                    height: 20,
                                     child: Image.asset(
                                       feedsList[index].liked ? ImagePath.heart_filled : ImagePath.heart,
                                       height: 20,
                                       width: 20,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
@@ -144,6 +145,7 @@ class PostFeedScreen extends HookConsumerWidget {
                                     ImagePath.comment,
                                     height: 20,
                                     width: 20,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                                 InkWell(
@@ -152,6 +154,7 @@ class PostFeedScreen extends HookConsumerWidget {
                                     ImagePath.send,
                                     height: 20,
                                     width: 20,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ],
