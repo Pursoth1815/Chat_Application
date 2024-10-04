@@ -47,6 +47,7 @@ class CustomTextField extends HookWidget {
       height: height,
       padding: padding,
       margin: margin,
+      alignment: Alignment.topLeft,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(borderRadius),

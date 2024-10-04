@@ -29,7 +29,7 @@ class RegisterUserModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {'user_id': user_id, 'username': username, 'password': password, 'full_name': fullName, 'created_at': FieldValue.serverTimestamp()};
+    return {'user_id': user_id, 'user_name': username, 'password': password, 'full_name': fullName, 'created_at': FieldValue.serverTimestamp()};
   }
 
   factory RegisterUserModel.fromMap(Map<String, dynamic> map) {

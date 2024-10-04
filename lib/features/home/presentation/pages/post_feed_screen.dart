@@ -133,8 +133,8 @@ class PostFeedScreen extends HookConsumerWidget {
                                     height: 30,
                                     child: Image.asset(
                                       feedsList[index].liked ? ImagePath.heart_filled : ImagePath.heart,
-                                      height: 24,
-                                      width: 24,
+                                      height: 20,
+                                      width: 20,
                                     ),
                                   ),
                                 ),
@@ -142,16 +142,16 @@ class PostFeedScreen extends HookConsumerWidget {
                                   onTap: () {},
                                   child: Image.asset(
                                     ImagePath.comment,
-                                    height: 24,
-                                    width: 24,
+                                    height: 20,
+                                    width: 20,
                                   ),
                                 ),
                                 InkWell(
                                   onTap: () {},
                                   child: Image.asset(
                                     ImagePath.send,
-                                    height: 24,
-                                    width: 24,
+                                    height: 20,
+                                    width: 20,
                                   ),
                                 ),
                               ],
@@ -160,7 +160,7 @@ class PostFeedScreen extends HookConsumerWidget {
                           Row(
                             children: [
                               IconButton(
-                                iconSize: 24,
+                                iconSize: 20,
                                 icon: Icon(feedsList[index].saved ? Icons.bookmark : Icons.bookmark_border_rounded, color: AppColors.black),
                                 onPressed: () async {
                                   await ref.read(feedListProvider.notifier).actionButtonsTrigger(ActionBtn.save, feedsList[index].pid);

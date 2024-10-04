@@ -139,6 +139,7 @@ class RegistrationScreen extends HookConsumerWidget {
                       usernameController.clear();
                       passwordController.clear();
                       confirmPasswordController.clear();
+                      ref.read(checkBoxProvider.notifier).state = false;
                       if (res.status) {
                         pageController.animateToPage(0, duration: Duration(milliseconds: 800), curve: Curves.linearToEaseOut);
                       }

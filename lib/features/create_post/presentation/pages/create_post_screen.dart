@@ -27,7 +27,6 @@ class CreatePostScreen extends HookConsumerWidget {
     final descriptionController = useTextEditingController();
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       appBar: AppBar(
         title: Text(
@@ -151,7 +150,11 @@ class CreatePostScreen extends HookConsumerWidget {
                 maxLines: 2,
                 borderRadius: 12,
                 hintText: 'Write your discription...',
-                hintStyle: TextStyle(color: AppColors.black.withOpacity(0.5), fontSize: 12, fontWeight: FontWeight.w400),
+                hintStyle: TextStyle(
+                  color: AppColors.black.withOpacity(0.5),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
               Spacer(),
               Container(
